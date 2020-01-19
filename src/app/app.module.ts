@@ -8,13 +8,15 @@ import { HttpClientModule } from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ArtistMostAlbumComponent } from './artist-most-album/artist-most-album.component';
 import { AllSongsOfAllAlbumsOfEminemComponent } from './all-songs-of-all-albums-of-eminem/all-songs-of-all-albums-of-eminem.component';
+import { TimelineGunsComponent } from './timeline-guns/timeline-guns.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChanteurComponent,
     ArtistMostAlbumComponent,
-    AllSongsOfAllAlbumsOfEminemComponent
+    AllSongsOfAllAlbumsOfEminemComponent,
+    TimelineGunsComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, BrowserAnimationsModule

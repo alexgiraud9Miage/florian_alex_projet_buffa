@@ -16,11 +16,13 @@ export class AppComponent {
   chanteursMostBands;
   artistWithMostAlbum;
   allSongsOfAllAlbumsOfEminem;
+  timelineGuns;
 
   ngOnInit(): void {  
     this.getMostBands();
     this.getArtistsWithMostAlbum();
     this.getAllSongsOfAllAlbumsOfEminem();
+    
   }
 
   getArtistsWithMostAlbum() {
@@ -33,5 +35,8 @@ export class AppComponent {
 
   getAllSongsOfAllAlbumsOfEminem(){
     this.allSongsOfAllAlbumsOfEminem = this.chanteurService.getAllSongsOfAllAlbumsOfEminem();
+  }
+  getTimelineGuns(){
+    this.timelineGuns = this.chanteurService.getTimelineGuns();
   }
 }
