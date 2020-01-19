@@ -4,6 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 
 import * as am4plugins_timeline from "@amcharts/amcharts4/plugins/timeline";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 
 
@@ -24,28 +25,26 @@ export class TimelineGunsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.chart = am4core.create("chartdivTimelineGuns", am4plugins_timeline.CurveChart);
-    this.categoryAxis = this.chart.yAxes.push(new am4charts.CategoryAxis());
-    this.dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
-    this.series = this.chart.series.push(new am4plugins_timeline.CurveLineSeries());
-    
-
     let colorSet = new am4core.ColorSet();
   }
 
   methodeCreateChart(){
-    //am4core.useTheme(am4themes_animated);
+    am4core.useTheme(am4themes_animated);
+
+    this.chart = am4core.create("chartdivTimelineGuns", am4plugins_timeline.CurveChart);
+    this.categoryAxis = this.chart.yAxes.push(new am4charts.CategoryAxis());
+    this.dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
+
+    this.series = this.chart.series.push(new am4plugins_timeline.CurveLineSeries());
+
     this.chart.curveContainer.padding(0, 100, 0, 120);
     this.chart.maskBullets = false;
     let colorSet = new am4core.ColorSet();
 
-    var artistsList = [];
     var albumsList = [];
-    var nameArtist = "";
     fetch("https://wasabi.i3s.unice.fr/api/v1/artist_all/name/Guns%20N'%20Roses").then(results=>{
       return results.json();
     }).then(originalData=>{
-      nameArtist = originalData.name;
       let albums = originalData["albums"];
       return albums;
     }).then(albums=>{
@@ -78,8 +77,8 @@ export class TimelineGunsComponent implements OnInit {
     this.dateAxis.renderer.labels.template.disabled = true;
 
     this.series.strokeOpacity = 0;
-    this.series.dataFields.dateX  = "year";
-    this.series.dataFields.categoryY  = "category";
+    this.series.dataFields.dateX = "year";
+    this.series.dataFields.categoryY = "category";
     this.series.dataFields.value = "size";
     this.series.baseAxis = this.categoryAxis;
     
