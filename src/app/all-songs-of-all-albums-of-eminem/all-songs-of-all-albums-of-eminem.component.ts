@@ -18,75 +18,59 @@ export class AllSongsOfAllAlbumsOfEminemComponent implements OnInit {
   ngOnInit() {
     this.chart = am4core.create("chartdivAllSongsOfAllAlbumsOfEminem", am4plugins_forceDirected.ForceDirectedTree);
     this.networkSeries = this.chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
-    //this.allSongsOfAllAlbumsOfEminem
-    //.then(Response => this.updateCharts(Response));
-  }
-
-  methodeCreateChart(){
+    
     var artistsList = [];
         var albumsList = [];
         var nameArtist = "";
         fetch("http://wasabi.i3s.unice.fr/api/v1/artist_all/name/Eminem").then(results => {
-            return results.json();
+                return results.json();
         }).then(originalData => {
-                 nameArtist = originalData.name;
+                        nameArtist = originalData.name;
                 let albums = originalData["albums"];
                 return albums;
         }).then(albums => {
                 for(var i = 0; i < albums.length; i++) {
                         var nameAlbum = albums[i].title;
+                        if (nameAlbum == "Other Songs"){
+                                break;
+                        }
                         var songs = [];
                         for(var j = 0; j<albums[i].songs.length; j++){
-                               var songTitle = albums[i].songs[j].title;
-                               songs.push({name: songTitle, value: 10});
+                                var songTitle = albums[i].songs[j].title;
+                                //console.log("Nom song : " + songTitle)
+                                songs.push({name: songTitle, value: 10});
                         }
                         albumsList.push({name: nameAlbum, children: songs});
                 }
                 artistsList.push({name: nameArtist, children: albumsList});
-                console.log(artistsList);
+                //console.log(artistsList);
+                this.updateCharts(artistsList);
         });
-        return artistsList;
   }
 
-  updateCharts(data : []){
-    var artistsList = [];
-        var albumsList = [];
-        var nameArtist = "";
-        fetch("http://wasabi.i3s.unice.fr/api/v1/artist_all/name/Eminem").then(results => {
-            return results.json();
-        }).then(originalData => {
-                 nameArtist = originalData.name;
-                let albums = originalData["albums"];
-                return albums;
-        }).then(albums => {
-                for(var i = 0; i < albums.length; i++) {
-                        var nameAlbum = albums[i].title;
-                        var songs = [];
-                        for(var j = 0; j<albums[i].songs.length; j++){
-                               var songTitle = albums[i].songs[j].title;
-                               songs.push({name: songTitle, value: 10});
-                        }
-                        albumsList.push({name: nameAlbum, children: songs});
-                }
-                artistsList.push({name: nameArtist, children: albumsList});
-                console.log(artistsList);
-        });
+  updateCharts(artistsList){
+    //console.log("artist list : " + artistsList)
     this.chart.data = artistsList;
-    this.drawChart();
+    //console.log("Here : " + this.chart.data)
+    this.drawChart(artistsList);
   }
 
-  drawChart(){
+  drawChart(data){
   this.networkSeries.dataFields.value = "value";
   this.networkSeries.dataFields.name = "name";
   this.networkSeries.dataFields.children = "children";
   this.networkSeries.nodes.template.tooltipText = "{name}:{value}";
   this.networkSeries.nodes.template.fillOpacity = 1;
-  this.networkSeries.manyBodyStrength = -20;
-  this.networkSeries.links.template.strength = 0.8;
-  this.networkSeries.minRadius = am4core.percent(2);
+  this.networkSeries.manyBodyStrength = -10;
+  this.networkSeries.links.template.strength = 0.9;
+  this.networkSeries.minRadius = am4core.percent(1);
 
+  this.networkSeries.maxLevels = 2;
   this.networkSeries.nodes.template.label.text = "{name}"
-  this.networkSeries.fontSize = 10;
+  this.networkSeries.fontSize = 12;
+
+  this.networkSeries.nodes.template.label.hideOversized = true;
+  this.networkSeries.nodes.template.label.truncate = true;     
 
   }
 }
