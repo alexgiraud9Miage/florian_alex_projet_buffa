@@ -22,6 +22,7 @@ export class AppComponent {
     this.getMostBands();
     this.getArtistsWithMostAlbum();
     this.getAllSongsOfAllAlbumsOfEminem();
+    this.getTimelineGuns();
     
   }
 
