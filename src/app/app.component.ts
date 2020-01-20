@@ -27,10 +27,6 @@ export class AppComponent {
     this.getAllSongsOfAllAlbumsOfEminem();
   }
 
-  setNbBands(newNb){
-    console.log("Nb" + newNb);
-    this.nbMostBandsGraduable = newNb;
-  }
   getArtistsWithMostAlbum() {
     this.artistWithMostAlbum = this.chanteurService.getArtistsWithMostAlbum();
   }
@@ -40,10 +36,14 @@ export class AppComponent {
   }
   
   getMostBandsGraduable(limitNumber) {
-    this.chanteursMostBandsGraduable = this.chanteurService.getMostBandsGraduable(limitNumber);
+    this.chanteurService.getMostBandsGraduable(limitNumber).subscribe((result : any)=>
+      this.chanteursMostBandsGraduable = result
+    );
   }
 
   getAllSongsOfAllAlbumsOfEminem(){
     this.allSongsOfAllAlbumsOfEminem = this.chanteurService.getAllSongsOfAllAlbumsOfEminem();
   }
+
+  
 }

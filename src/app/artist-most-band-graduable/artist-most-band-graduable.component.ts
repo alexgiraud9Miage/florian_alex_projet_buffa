@@ -1,6 +1,8 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
+
+import { ChanteurService } from '../chanteur.service'; 
 import { promise } from 'protractor';
 
 @Component({
@@ -10,18 +12,41 @@ import { promise } from 'protractor';
 })
 
 export class ArtistMostBandGraduableComponent implements OnInit {
-  @Input() chanteursMostBandsGraduable: Promise<any>;
+  @Input() chanteursMostBandsGraduable;
   chart;
+  
+  nbMostBandsGraduable = 5;
 
-  constructor() {}
+  constructor(private chanteurService: ChanteurService) {  
+  }
 
   ngOnInit() {
     //console.log("debut : " + JSON.stringify(this.chanteur))
     this.chart = am4core.create("chanteursMostBandsGraduablediv", am4charts.PieChart);
-    this.chanteursMostBandsGraduable.then(Response => this.updateCharts(Response));
+
+    this.chanteurService.getMostBandsGraduable(this.nbMostBandsGraduable).subscribe((result : any)=>{
+      this.chanteursMostBandsGraduable = result;
+      this.updateCharts(this.chanteursMostBandsGraduable);
+      console.log("Graduade : " + this.chanteursMostBandsGraduable);
+    }
+    );
+  }
+
+  updateTwo(data){
+    this.chanteurService.getMostBandsGraduable(this.nbMostBandsGraduable).subscribe((result : any)=>{
+      this.chanteursMostBandsGraduable = result;
+      this.updateChartsTwo(this.chanteursMostBandsGraduable);
+    }
+    
+  );
+  }
+
+  updateChartsTwo(data : []){
+    this.chart.data = data;
   }
 
   updateCharts(data : []){
+    //console.log(data)
     this.chart.data = data;
     this.drawChart();
   }
@@ -30,5 +55,10 @@ export class ArtistMostBandGraduableComponent implements OnInit {
     let series = this.chart.series.push(new am4charts.PieSeries());
     series.dataFields.value = "sum";
     series.dataFields.category = "membername";
+  }
+
+  onGraduableChange() {
+    console.log(this.nbMostBandsGraduable)
+    this.updateTwo(this.nbMostBandsGraduable);
   }
 }

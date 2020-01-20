@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import { Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class ChanteurService {
     return this.http.get(this.urlMostBands).toPromise();
   }
 
-  getMostBandsGraduable(limitNumber): Promise<any> {
-    return this.http.get(this.urlMostBandsGraduable + limitNumber).toPromise();
+  getMostBandsGraduable(limitNumber){
+    return this.http.get(this.urlMostBandsGraduable + limitNumber);
   }
 
   getArtistsWithMostAlbum() : Promise<any> {
