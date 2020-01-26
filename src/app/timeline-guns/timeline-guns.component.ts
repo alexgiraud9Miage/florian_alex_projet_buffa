@@ -64,11 +64,11 @@ var colorSet = new am4core.ColorSet();
 chart.fontSize = 11;
 chart.tooltipContainer.fontSize = 11;
 
-var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis() as any);
 categoryAxis.dataFields.category = "category";
 categoryAxis.renderer.grid.template.disabled = true;
 
-var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+var dateAxis = chart.xAxes.push(new am4charts.DateAxis() as any);
 dateAxis.renderer.points = [{ x: -400, y: 0 }, { x: 0, y: 50 }, { x: 400, y: 0 }]
 dateAxis.renderer.polyspline.tensionX = 0.8;
 dateAxis.renderer.grid.template.disabled = true;
@@ -174,7 +174,6 @@ outerCircle.events.on("over", function(event){
   var circle = event.target.parent.children.getIndex(1);
   circle.isHover = true;
   event.target.stroke = circle.fill;
-  event.target.radius = circle.pixelRadius;
   event.target.animate({property: "rotation", from: 0, to: 360}, 4000, am4core.ease.sinInOut);
 });
 

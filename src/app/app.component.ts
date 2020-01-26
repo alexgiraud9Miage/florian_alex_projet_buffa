@@ -14,14 +14,18 @@ export class AppComponent {
 
   title = 'angular-projet-wasabi';
   chanteursMostBands;
+  chanteursMostBandsGraduable;
   artistWithMostAlbum;
   allSongsOfAllAlbumsOfEminem;
   timelineGuns;
 
+  nbMostBandsGraduable = 5;
+   
   ngOnInit(): void {  
     this.getMostBands();
+    this.getMostBandsGraduable(this.nbMostBandsGraduable);
     this.getArtistsWithMostAlbum();
-    this.getAllSongsOfAllAlbumsOfEminem();
+    //this.getAllSongsOfAllAlbumsOfEminem();
     this.getTimelineGuns();
     
   }
@@ -33,10 +37,16 @@ export class AppComponent {
   getMostBands() {
     this.chanteursMostBands = this.chanteurService.getMostBands();
   }
-
-  getAllSongsOfAllAlbumsOfEminem(){
-    this.allSongsOfAllAlbumsOfEminem = this.chanteurService.getAllSongsOfAllAlbumsOfEminem();
+  
+  getMostBandsGraduable(limitNumber) {
+    this.chanteurService.getMostBandsGraduable(limitNumber).subscribe((result : any)=>
+      this.chanteursMostBandsGraduable = result
+    );
   }
+
+ /* getAllSongsOfAllAlbumsOfEminem(){
+    this.allSongsOfAllAlbumsOfEminem = this.chanteurService.getAllSongsOfAllAlbumsOfEminem();
+  }*/
   getTimelineGuns(){
     this.timelineGuns = this.chanteurService.getTimelineGuns();
   }
