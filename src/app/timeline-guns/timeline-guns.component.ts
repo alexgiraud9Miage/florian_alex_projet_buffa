@@ -39,7 +39,7 @@ export class TimelineGunsComponent implements OnInit {
         //console.log("date album : "+dateAlbum)
 
         if (dateAlbum != "" && dateAlbum != null){
-          albumsList.push({category: "categddd", year:dateAlbum, size:7, text: nameAlbum });
+          albumsList.push({category: "", year:dateAlbum, size:7, text: nameAlbum });
         }
         
       }
