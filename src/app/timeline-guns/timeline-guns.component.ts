@@ -26,13 +26,6 @@ export class TimelineGunsComponent implements OnInit {
 
   ngOnInit() {
     am4core.useTheme(am4themes_animated);
-    let colorSet = new am4core.ColorSet();
-    
-  }
-
-  methodeCreateChart(){
-    
-
     this.chart = am4core.create("chartdivTimelineGuns", am4plugins_timeline.CurveChart);
     this.categoryAxis = this.chart.yAxes.push(new am4charts.CategoryAxis());
     this.dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
@@ -45,7 +38,6 @@ export class TimelineGunsComponent implements OnInit {
     fetch("https://wasabi.i3s.unice.fr/api/v1/artist_all/name/Guns%20N'%20Roses").then(results=>{
       return results.json();
     }).then(originalData=>{
-
       var albums = originalData["albums"];
       return albums;
     }).then(albums=>{
@@ -53,23 +45,29 @@ export class TimelineGunsComponent implements OnInit {
         var nameAlbum = albums[i].title;
         var dateAlbum = albums[i].publicationDate;
         //console.log("date album : "+dateAlbum)
+
+        if (dateAlbum != "" && dateAlbum != null){
+          albumsList.push({category: "categddd", year:dateAlbum, size:7, text: nameAlbum });
+        }
+        
       }
-      albumsList.push({category: "", year:dateAlbum, size:7, text: nameAlbum });
+      //console.log(JSON.stringify(albumsList))
       
       return albumsList;
     }).then(albumsList =>{
       this.updateChart(albumsList);
     })
+    
   }
 
   updateChart(data){
     this.chart.data = data;
-    console.log("***************** album list **************\n" + JSON.stringify(data) +"\n\n")
+    //console.log("***************** album list **************\n" + JSON.stringify(data) +"\n\n")
     this.drawChart();
   }
 
   drawChart(){
-    console.log(this.chart.data);
+    console.log("data of chart at the end " + JSON.stringify(this.chart.data));
     this.chart.dateFormatter.inputDateFormat = "yyyy";
 
     this.chart.fontSize = 11;
