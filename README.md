@@ -30,7 +30,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Manipulation des données 	
 
-Ajout d'un diagramme permettant d'afficher l'ensemble des albums et des sons d'un artiste	(composant "all-songs-of-all-albums-of-eminem").
+Ajout d'un diagramme permettant d'afficher l'ensemble des albums et des sons d'un artiste	(composant "all-songs-of-all-albums-of-eminem").<br>
 Ajout d'un charts permettant d'afficher les 5 artistes ayant appartenu au plus de groupe (composant "chanteur")
 
 ## Fonction de recherche 	
