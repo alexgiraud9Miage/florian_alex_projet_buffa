@@ -40,6 +40,7 @@ export class ArtistMostBandGraduableComponent implements OnInit {
   }
 
   updateTwo(data){
+    console.log(JSON.stringify(data))
     this.chanteurService.getMostBandsGraduable(this.nbMostBandsGraduable).subscribe((result : any)=>{
       this.chanteursMostBandsGraduable = result;
       this.updateChartsTwo(this.chanteursMostBandsGraduable);
