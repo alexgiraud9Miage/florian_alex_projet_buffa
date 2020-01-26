@@ -29,12 +29,6 @@ export class TimelineGunsComponent implements OnInit {
     this.dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
     this.series = this.chart.series.push(new am4plugins_timeline.CurveLineSeries());
     
-
-    let colorSet = new am4core.ColorSet();
-  }
-
-  methodeCreateChart(){
-    //am4core.useTheme(am4themes_animated);
     this.chart.curveContainer.padding(0, 100, 0, 120);
     this.chart.maskBullets = false;
     let colorSet = new am4core.ColorSet();
@@ -47,16 +41,25 @@ export class TimelineGunsComponent implements OnInit {
     }).then(originalData=>{
       nameArtist = originalData.name;
       let albums = originalData["albums"];
+      
       return albums;
     }).then(albums=>{
       for(var i = 0; i < albums.length; i++){
         var nameAlbum = albums[i].title;
         var dateAlbum = albums[i].publicationDate;
+        //console.log("date album : "+dateAlbum)
       }
       albumsList.push({category: "", year:dateAlbum, size:7, text: nameAlbum });
+      
+      return albumsList;
+    }).then(albumsList =>{
+      this.updateChart(albumsList);
     })
+  }
 
-    this.chart.data = albumsList;
+  updateChart(data){
+    this.chart.data = data;
+    console.log("***************** album list **************\n" + JSON.stringify(data) +"\n\n")
     this.drawChart();
   }
 
