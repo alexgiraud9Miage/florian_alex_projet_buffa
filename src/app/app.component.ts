@@ -16,7 +16,7 @@ export class AppComponent {
   chanteursMostBands;
   chanteursMostBandsGraduable;
   artistWithMostAlbum;
-  allSongsOfAllAlbumsOfEminem;
+  //allSongsOfAllAlbumsOfEminem;
   
   nbMostBandsGraduable = 5;
 
@@ -24,7 +24,7 @@ export class AppComponent {
     this.getMostBands();
     this.getMostBandsGraduable(this.nbMostBandsGraduable);
     this.getArtistsWithMostAlbum();
-    this.getAllSongsOfAllAlbumsOfEminem();
+    //this.getAllSongsOfAllAlbumsOfEminem();
   }
 
   getArtistsWithMostAlbum() {
@@ -41,9 +41,9 @@ export class AppComponent {
     );
   }
 
-  getAllSongsOfAllAlbumsOfEminem(){
+ /* getAllSongsOfAllAlbumsOfEminem(){
     this.allSongsOfAllAlbumsOfEminem = this.chanteurService.getAllSongsOfAllAlbumsOfEminem();
-  }
+  }*/
 
   
 }

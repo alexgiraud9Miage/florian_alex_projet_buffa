@@ -12,7 +12,7 @@ import { promise } from 'protractor';
 })
 
 export class ArtistMostBandGraduableComponent implements OnInit {
-  @Input() chanteursMostBandsGraduable;
+  @Input() chanteursMostBandsGraduable : string[];
   chart;
   
   nbMostBandsGraduable = 5;
@@ -21,15 +21,22 @@ export class ArtistMostBandGraduableComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log("debut : " + JSON.stringify(this.chanteur))
     this.chart = am4core.create("chanteursMostBandsGraduablediv", am4charts.PieChart);
 
-    this.chanteurService.getMostBandsGraduable(this.nbMostBandsGraduable).subscribe((result : any)=>{
-      this.chanteursMostBandsGraduable = result;
-      this.updateCharts(this.chanteursMostBandsGraduable);
-      console.log("Graduade : " + this.chanteursMostBandsGraduable);
+    if(localStorage.getItem("artist_most_band_graduable") == null){
+      this.chanteurService.getMostBandsGraduable(this.nbMostBandsGraduable).subscribe((result : any)=>{
+        this.chanteursMostBandsGraduable = result;
+        this.updateCharts(this.chanteursMostBandsGraduable);
+        // *****************   PERSISTENCE *************************///
+        localStorage.setItem("artist_most_band_graduable", JSON.stringify(this.chanteursMostBandsGraduable));
+      }
+      );
     }
-    );
+    else{
+      this.updateCharts(JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem("artist_most_band_graduable")))));
+    }
+
+    
   }
 
   updateTwo(data){
@@ -41,12 +48,11 @@ export class ArtistMostBandGraduableComponent implements OnInit {
   );
   }
 
-  updateChartsTwo(data : []){
+  updateChartsTwo(data : string[]){
     this.chart.data = data;
   }
 
-  updateCharts(data : []){
-    //console.log(data)
+  updateCharts(data : string[]){
     this.chart.data = data;
     this.drawChart();
   }
@@ -58,7 +64,7 @@ export class ArtistMostBandGraduableComponent implements OnInit {
   }
 
   onGraduableChange() {
-    console.log(this.nbMostBandsGraduable)
+    //console.log(this.nbMostBandsGraduable)
     this.updateTwo(this.nbMostBandsGraduable);
   }
 }

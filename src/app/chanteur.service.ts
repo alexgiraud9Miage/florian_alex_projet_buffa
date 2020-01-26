@@ -12,7 +12,7 @@ export class ChanteurService {
   private urlMostBands = "https://wasabi.i3s.unice.fr/api/v1/artist/member/count/band?limit=5";
   private urlMostBandsGraduable = "https://wasabi.i3s.unice.fr/api/v1/artist/member/count/band?limit=";
   private urlArtistWithMostAlbum = "https://wasabi.i3s.unice.fr/api/v1/artist/count/album?limit=5";
-  private urlAllSongsOfAllAlbumsOfEminem = "https://wasabi.i3s.unice.fr/api/v1/artist_all/name/Eminem";
+  //private urlAllSongsOfAllAlbumsOfEminem = "https://wasabi.i3s.unice.fr/api/v1/artist_all/name/Akon";
  
   getMostBands(): Promise<any> {
     return this.http.get(this.urlMostBands).toPromise();
@@ -26,7 +26,7 @@ export class ChanteurService {
     return this.http.get(this.urlArtistWithMostAlbum).toPromise();
   }
 
-  getAllSongsOfAllAlbumsOfEminem() : Promise<any> {
+  /*getAllSongsOfAllAlbumsOfEminem() : Promise<any> {
     return this.http.get(this.urlAllSongsOfAllAlbumsOfEminem).toPromise();
-  }
+  }*/
 }

@@ -26,7 +26,7 @@ export class ArtistMostAlbumComponent implements OnInit {
 
   drawChart(){
     
-    console.log("chart data : " + this.chart.data);
+    //console.log("chart data : " + this.chart.data);
     var categoryAxis = this.chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "name";
     categoryAxis.renderer.grid.template.location = 0;

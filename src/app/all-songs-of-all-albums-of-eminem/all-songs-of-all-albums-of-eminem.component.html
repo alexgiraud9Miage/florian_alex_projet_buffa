@@ -1,4 +1,7 @@
 <h2 style="margin-top: 5em"><u>All songs of all album of Eminem</u></h2>
 
+<label>Choisir le nom de l'artiste : </label>
+<input type="text" [(ngModel)]="nameOfArtist" (keyup)="onNameChange($event)" id="tentacles" name="tentacles" min="1" max="10"> <label style="margin-left:2em; color:red">(Sensible à la casse)</label>
+<br><label>exemple: Tapez Eminem ou Akon ou Maroon 5</label>
 
-<div id="chartdivAllSongsOfAllAlbumsOfEminem" style="width: 100%; height: 2000px"></div>
+<div id="chartdivAllSongsOfAllAlbumsOfEminem" style="width: 100%; height: 1000px"></div>

@@ -12,6 +12,7 @@ export class AllSongsOfAllAlbumsOfEminemComponent implements OnInit {
   @Input() allSongsOfAllAlbumsOfEminem : Promise<any>;
   chart;
   networkSeries;
+  nameOfArtist = "Akon";
 
   constructor() { }
 
@@ -22,10 +23,13 @@ export class AllSongsOfAllAlbumsOfEminemComponent implements OnInit {
     var artistsList = [];
         var albumsList = [];
         var nameArtist = "";
-        fetch("http://wasabi.i3s.unice.fr/api/v1/artist_all/name/Eminem").then(results => {
+        var fetchVariable = "http://wasabi.i3s.unice.fr/api/v1/artist_all/name/";
+        fetchVariable += this.nameOfArtist;
+
+        fetch(fetchVariable).then(results => {
                 return results.json();
         }).then(originalData => {
-                        nameArtist = originalData.name;
+                nameArtist = originalData.name;
                 let albums = originalData["albums"];
                 return albums;
         }).then(albums => {
@@ -54,6 +58,47 @@ export class AllSongsOfAllAlbumsOfEminemComponent implements OnInit {
     //console.log("Here : " + this.chart.data)
     this.drawChart(artistsList);
   }
+
+  onNameChange(event) {
+    console.log(this.nameOfArtist)
+    this.updateChartsTwo(event.target.value);
+  }
+
+  updateChartsTwo(newText){
+        var artistsList = [];
+        var albumsList = [];
+        var nameArtist = "";
+        var fetchVariable = "http://wasabi.i3s.unice.fr/api/v1/artist_all/name/";
+        fetchVariable += newText;
+
+        fetch(fetchVariable).then(results => {
+                return results.json();
+        }).then(originalData => {
+                        nameArtist = originalData.name;
+                let albums = originalData["albums"];
+                return albums;
+        }).then(albums => {
+                for(var i = 0; i < albums.length; i++) {
+                        var nameAlbum = albums[i].title;
+                        if (nameAlbum == "Other Songs"){
+                                break;
+                        }
+                        var songs = [];
+                        for(var j = 0; j<albums[i].songs.length; j++){
+                                var songTitle = albums[i].songs[j].title;
+                                //console.log("Nom song : " + songTitle)
+                                songs.push({name: songTitle, value: 10});
+                        }
+                        albumsList.push({name: nameAlbum, children: songs});
+                }
+                artistsList.push({name: nameArtist, children: albumsList});
+                //console.log(artistsList);
+                this.chart.data = artistsList;
+        });
+
+  }
+
+
 
   drawChart(data){
   this.networkSeries.dataFields.value = "value";
