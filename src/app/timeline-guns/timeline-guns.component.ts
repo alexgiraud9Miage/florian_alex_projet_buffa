@@ -4,6 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 
 import * as am4plugins_timeline from "@amcharts/amcharts4/plugins/timeline";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 
 
@@ -24,24 +25,28 @@ export class TimelineGunsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    am4core.useTheme(am4themes_animated);
+    let colorSet = new am4core.ColorSet();
+    
+  }
+
+  methodeCreateChart(){
+    
+
     this.chart = am4core.create("chartdivTimelineGuns", am4plugins_timeline.CurveChart);
     this.categoryAxis = this.chart.yAxes.push(new am4charts.CategoryAxis());
     this.dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
     this.series = this.chart.series.push(new am4plugins_timeline.CurveLineSeries());
-    
     this.chart.curveContainer.padding(0, 100, 0, 120);
     this.chart.maskBullets = false;
-    let colorSet = new am4core.ColorSet();
+    var colorSet = new am4core.ColorSet();
 
-    var artistsList = [];
     var albumsList = [];
-    var nameArtist = "";
     fetch("https://wasabi.i3s.unice.fr/api/v1/artist_all/name/Guns%20N'%20Roses").then(results=>{
       return results.json();
     }).then(originalData=>{
-      nameArtist = originalData.name;
-      let albums = originalData["albums"];
-      
+
+      var albums = originalData["albums"];
       return albums;
     }).then(albums=>{
       for(var i = 0; i < albums.length; i++){
@@ -64,6 +69,7 @@ export class TimelineGunsComponent implements OnInit {
   }
 
   drawChart(){
+    console.log(this.chart.data);
     this.chart.dateFormatter.inputDateFormat = "yyyy";
 
     this.chart.fontSize = 11;
@@ -81,20 +87,20 @@ export class TimelineGunsComponent implements OnInit {
     this.dateAxis.renderer.labels.template.disabled = true;
 
     this.series.strokeOpacity = 0;
-    this.series.dataFields.dateX  = "year";
-    this.series.dataFields.categoryY  = "category";
+    this.series.dataFields.dateX = "year";
+    this.series.dataFields.categoryY = "category";
     this.series.dataFields.value = "size";
     this.series.baseAxis = this.categoryAxis;
     
-    let interfaceColors = new am4core.InterfaceColorSet();
+    var interfaceColors = new am4core.InterfaceColorSet();
     this.series.tooltip.pointerOrientation = "down";
 
-    let distance = 100;
-    let angle = 60;
+    var distance = 100;
+    var angle = 60;
 
-    let bullet = this.series.bullets.push(new am4charts.Bullet());
+    var bullet = this.series.bullets.push(new am4charts.Bullet());
 
-    let line = bullet.createChild(am4core.Line);
+    var line = bullet.createChild(am4core.Line);
     line.adapter.add("stroke", function(fill, target) {
       if (target.dataItem) {
         return this.chart.colors.getIndex(target.dataItem.index)
@@ -107,11 +113,11 @@ export class TimelineGunsComponent implements OnInit {
     line.x2 = distance - 10;
     line.strokeDasharray = "1,3";
     
-    let circle = bullet.createChild(am4core.Circle);
+    var circle = bullet.createChild(am4core.Circle);
     circle.radius = 30;
     circle.fillOpacity = 1;
     circle.strokeOpacity = 0;
-    let circleHoverState = circle.states.create("hover");
+    var circleHoverState = circle.states.create("hover");
     circleHoverState.properties.scale = 1.3;
     
     this.series.heatRules.push({ target: circle, min: 20, max: 50, property: "radius" });
@@ -125,7 +131,7 @@ export class TimelineGunsComponent implements OnInit {
       return -target.pixelRadius - 4;
     });
 
-    let yearLabel = bullet.createChild(am4core.Label);
+    var yearLabel = bullet.createChild(am4core.Label);
     yearLabel.text = "{year}";
     yearLabel.strokeOpacity = 0;
     yearLabel.fill = am4core.color("#fff");
@@ -133,7 +139,7 @@ export class TimelineGunsComponent implements OnInit {
     yearLabel.verticalCenter = "middle";
     yearLabel.interactionsEnabled = false;
 
-    let label = bullet.createChild(am4core.Label);
+    var label = bullet.createChild(am4core.Label);
     label.propertyFields.text = "text";
     label.strokeOpacity = 0;
     label.horizontalCenter = "right";
@@ -141,8 +147,8 @@ export class TimelineGunsComponent implements OnInit {
 
     label.adapter.add("opacity", function(opacity, target) {
       if(target.dataItem){
-        let index = target.dataItem.index;
-        let line = target.parent.children.getIndex(0);
+        var index = target.dataItem.index;
+        var line = target.parent.children.getIndex(0);
 
         if (index % 2 == 0) {
           target.y = -distance * am4core.math.sin(-angle);
@@ -160,18 +166,18 @@ export class TimelineGunsComponent implements OnInit {
       return 1;
     });
 
-    let outerCircle = bullet.createChild(am4core.Circle);
+    var outerCircle = bullet.createChild(am4core.Circle);
     outerCircle.radius = 30;
     outerCircle.fillOpacity = 0;
     outerCircle.strokeOpacity = 0;
     outerCircle.strokeDasharray = "1,3";
 
-    let hoverState = outerCircle.states.create("hover");
+    var hoverState = outerCircle.states.create("hover");
     hoverState.properties.strokeOpacity = 0.8;
     hoverState.properties.scale = 1.5;
 
     outerCircle.events.on("over", function(event){
-      let circle = event.target.parent.children.getIndex(1);
+      var circle = event.target.parent.children.getIndex(1);
       circle.isHover = true;
       event.target.stroke = circle.fill;
       event.target.radius = circle.pixelRadius;
@@ -179,7 +185,7 @@ export class TimelineGunsComponent implements OnInit {
     });
 
     outerCircle.events.on("out", function(event){
-      let circle = event.target.parent.children.getIndex(1);
+      var circle = event.target.parent.children.getIndex(1);
       circle.isHover = false;
     });
 
