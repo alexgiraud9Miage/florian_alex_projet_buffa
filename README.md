@@ -39,7 +39,7 @@ Ajout d'une barre de recherche au dessus du diagramme 'en fleur', permettant de 
 
 ## Persistance des données 	
 
-Stockage des données dans le 'Local Storage' permettant de ne pas être effacés lors de la fermeture de l'onglet (composant "chanteur"). 	
+Stockage des données dans le 'Local Storage' permettant de ne pas être effacés lors de la fermeture de l'onglet (composant "artist-most-band-graduable.component"). 	
 
 ## Ajout d'une foctionnalité de graduation d'un diagramme	
 
