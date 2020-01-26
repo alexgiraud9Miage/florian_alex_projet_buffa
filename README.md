@@ -24,7 +24,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 *************************************************************************
 
-color:red ### Différence depuis lundi 20/01/2020	
+## color:red Différence depuis lundi 20/01/2020	
 
 *********************************************************************
 
